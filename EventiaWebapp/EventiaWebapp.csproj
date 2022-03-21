@@ -6,4 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Service\" />
+    <Folder Include="Views\" />
+    <Folder Include="Pages\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
