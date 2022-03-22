@@ -1,6 +1,7 @@
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddRazorPages();
 var app = builder.Build();
 
 app.UseHttpsRedirection();
@@ -15,6 +16,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-app.MapGet("/", () => "Hello World!");
+/*app.MapGet("/", () => "Hello World!");*/
 
 app.Run();
