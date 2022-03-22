@@ -1,6 +1,6 @@
 ﻿namespace EventiaWebapp.Models
 {
-    public class EventItem
+    public class Event
     {
         public string EventName { get; set; }
         public string EventLocation { get; set; }
