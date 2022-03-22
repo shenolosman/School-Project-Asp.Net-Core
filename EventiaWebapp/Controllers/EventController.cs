@@ -4,9 +4,9 @@ namespace EventiaWebapp.Controllers
 {
     public class EventController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(DateTime date)
         {
-            return View();
+            return View(date);
         }
 
         public IActionResult MyEvent()

@@ -1,4 +1,16 @@
-﻿Welcome to homepage of booking of events site.
+﻿@{
+    ViewBag.Title = "Event | Home";
+}
 
-
-link to check all events!
+<div class="position-absolute top-50 start-50 translate-middle">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Welcome Our Event Site</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Events calendar</h6>
+            <p> Here you’ll find a rich selection of events in and around Gothenburg. Get inspired of what’s going on right now or later on! Here in our popular events calendar, you find a great variety of first-class events on the stages, arenas, parks and places of interest.</p>
+        
+            <a asp-controller="Event" asp-action="Index"  class="btn btn-outline-primary">Events</a>
+            <a asp-controller="Event" asp-action="Index" class="btn btn-outline-success">Link</a>
+        </div>
+    </div>
+</div>
