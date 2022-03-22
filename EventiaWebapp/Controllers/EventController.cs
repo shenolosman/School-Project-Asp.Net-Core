@@ -4,6 +4,7 @@ namespace EventiaWebapp.Controllers
 {
     public class EventController : Controller
     {
+        private List<EventHandler> _eventHandlers;
         public IActionResult Index(DateTime date)
         {
             return View(date);
@@ -15,9 +16,16 @@ namespace EventiaWebapp.Controllers
 
         }
 
-        public IActionResult JoinEvent()
+        public IActionResult JoinEvent(int id)
         {
-            return View();
+
+            return View(id);
+        }
+
+        [HttpPost]
+        public IActionResult JoinEvent(int? id)
+        {
+            return RedirectToAction("MyEvent");
         }
     }
 }

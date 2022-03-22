@@ -1,3 +1,23 @@
-﻿@{
+﻿@model int?
+@{
     ViewBag.Title = "Event | Join Event";
+    Event item = _eventHandler.FindId(Model.Value);
 }
+
+    <div class="row">
+        @{
+
+            <div class="col">
+                <div class="card listedCard">
+                    <h5 class="card-header">@item.EventName</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">@item.EventDate in @item.EventLocation</h5>
+                        <p class="card-text">@item.Descriptiton</p>
+                        <a asp-controller="Event" asp-action="MyEvent" class="btn btn-xm btn-primary">Join This Event</a>
+                    </div>
+                </div>
+            </div>
+          @*asp-route-id="@Model.Value"*@
+        }
+        
+    </div>

@@ -3,28 +3,26 @@
 @{
     ViewBag.Title = "Event | List of Events";
     var date = DateTime.Today;
-   _eventHandler.GetBirthdaysXDaysFromDate(date);
+    _eventHandler.GetBirthdaysXDaysFromDate(date);
+    int id = 0;
 }
-
-<div class="container">
-<div class="row">
-    
-
-   
+    <div class="row">
         @foreach (var events in _eventHandler.Events)
         {
+
             <div class="col">
                 <div class="card listedCard">
                     <h5 class="card-header">@events.EventName</h5>
                     <div class="card-body">
                         <h5 class="card-title">@events.ThisYearsEvent(date).ToString("dd'/'MM") in @events.EventLocation</h5>
-                        <p class="card-text">Here you’ll find a rich selection of events in and around Gothenburg. Get inspired of what’s going on right now or later on! Here in our popular events calendar, you find a great variety of first-class events on the stages, arenas, parks and places of interest.
+                        <p class="card-text">
+                            @events.Descriptiton
                         </p>
-                        <a href="#" class="btn btn-xm btn-primary">Join</a>
+                        <a asp-controller="Event" asp-action="JoinEvent" asp-route-id="@id" class="btn btn-xm btn-primary">Join</a>
                     </div>
                 </div>
             </div>
+            id++;
         }
-</div>
-</div>
-
+        
+    </div>

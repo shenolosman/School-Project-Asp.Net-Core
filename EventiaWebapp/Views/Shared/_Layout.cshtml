@@ -12,14 +12,18 @@
         body {
             min-height: 100%;
             display: grid;
-            grid-template-rows: 1fr auto;
+            grid-template-rows: 2fr auto;
+        }
+        header {
+         
+            grid-row-end: 1;
         }
         .footer, {
             grid-row-start: 2;
             grid-row-end: 3;
             width: 100%;
         }
-        .listedCard:first-child {
+        .listedCard{
             width: 18rem;
             margin-top: 5px;
         }
