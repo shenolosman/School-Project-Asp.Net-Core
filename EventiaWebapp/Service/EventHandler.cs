@@ -30,7 +30,6 @@ namespace EventiaWebapp.Service
 
             return getAllEvents;
         }
-
         public Event FindId(int id)
         {
             return Events[id];

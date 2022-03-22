@@ -13,12 +13,10 @@ namespace EventiaWebapp.Controllers
         public IActionResult MyEvent()
         {
             return View();
-
         }
 
         public IActionResult JoinEvent(int id)
         {
-
             return View(id);
         }
 

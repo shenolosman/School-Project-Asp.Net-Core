@@ -6,23 +6,21 @@
     _eventHandler.GetBirthdaysXDaysFromDate(date);
     int id = 0;
 }
-    <div class="row">
-        @foreach (var events in _eventHandler.Events)
-        {
-
-            <div class="col">
-                <div class="card listedCard">
-                    <h5 class="card-header">@events.EventName</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">@events.ThisYearsEvent(date).ToString("dd'/'MM") in @events.EventLocation</h5>
-                        <p class="card-text">
-                            @events.Descriptiton
-                        </p>
-                        <a asp-controller="Event" asp-action="JoinEvent" asp-route-id="@id" class="btn btn-xm btn-primary">Join</a>
-                    </div>
+<div class="row">
+    @foreach (var events in _eventHandler.Events)
+    {
+        <div class="col">
+            <div class="card listedCard">
+                <h5 class="card-header">@events.EventName</h5>
+                <div class="card-body">
+                    <h5 class="card-title">@events.ThisYearsEvent(date).ToString("dd'/'MM") in @events.EventLocation</h5>
+                    <p class="card-text">
+                        @events.Descriptiton
+                    </p>
+                    <a asp-controller="Event" asp-action="JoinEvent" asp-route-id="@id" class="btn btn-xm btn-primary">Join</a>
                 </div>
             </div>
-            id++;
-        }
-        
-    </div>
+        </div>
+        id++;
+    }
+</div>

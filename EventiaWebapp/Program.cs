@@ -21,6 +21,4 @@ app.MapControllerRoute(
     pattern: "Event/JoinEvent/{id:int?}",
     new { controller = "Event", action = "JoinEvent" });
 
-/*app.MapGet("/", () => "Hello World!");*/
-
 app.Run();

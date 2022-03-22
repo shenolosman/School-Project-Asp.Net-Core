@@ -1,5 +1,27 @@
-﻿
+﻿@model int?
 @{
     ViewBag.Title = "Event | My Events";
+    int counter = 1;
 }
-
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Event Date</th>
+            <th scope="col">Event Location</th>
+            <th scope="col">Event Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in _eventHandler.Events)
+        {
+            <tr>
+                <th scope="row">@counter</th>
+                <td>@item.EventDate</td>
+                <td> @item.EventLocation</td>
+                <td>@item.EventName</td>
+            </tr>
+            counter++;
+        }
+    </tbody>
+</table>
