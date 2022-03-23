@@ -13,13 +13,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in _eventHandler.Events)
+        @foreach (var item in _eventHandler.Organizers)
         {
             <tr>
                 <th scope="row">@counter</th>
-                <td>@item.EventDate</td>
-                <td> @item.EventLocation</td>
-                <td>@item.EventName</td>
+                <td>@item.Events</td>
+                <td> @item.OrganizerMail</td>
+                <td>@item.OrganizerPhone</td>
             </tr>
             counter++;
         }

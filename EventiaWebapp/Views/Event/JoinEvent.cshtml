@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Event | Join Event";
     Event item = _eventHandler.FindId(Model.Value);
+    Attendee attende = new Attendee();
+    _eventHandler.JoinEvent(item.Id,attende);
 }
 <div class="row">
     @{
@@ -11,7 +13,8 @@
                 <div class="card-body">
                     <h5 class="card-title">@item.EventDate in @item.EventLocation</h5>
                     <p class="card-text">@item.Descriptiton</p>
-                    <a asp-controller="Event" asp-action="MyEvent" class="btn btn-xm btn-primary">Join This Event</a>
+                    <a asp-controller="Event" asp-action="MyEvent" asp-route-id="@item.Id" class="btn btn-xm btn-primary">Join This Event</a>
+                    <a asp-controller="Event" asp-action="Index"  class="btn btn-xm btn-warning">Go Back to Events</a>
                 </div>
             </div>
         </div>

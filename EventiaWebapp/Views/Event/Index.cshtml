@@ -3,8 +3,7 @@
 @{
     ViewBag.Title = "Event | List of Events";
     var date = DateTime.Today;
-    _eventHandler.GetBirthdaysXDaysFromDate(date);
-    int id = 0;
+    _eventHandler.GetEventsXDaysFromDate(date);
 }
 <div class="row">
     @foreach (var events in _eventHandler.Events)
@@ -17,10 +16,9 @@
                     <p class="card-text">
                         @events.Descriptiton
                     </p>
-                    <a asp-controller="Event" asp-action="JoinEvent" asp-route-id="@id" class="btn btn-xm btn-primary">Join</a>
+                    <a asp-controller="Event" asp-action="JoinEvent" asp-route-id="@events.Id" class="btn btn-xm btn-primary">Join</a>
                 </div>
             </div>
         </div>
-        id++;
     }
 </div>
