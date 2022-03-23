@@ -23,13 +23,8 @@ namespace EventiaWebapp.Controllers
         [HttpPost]
         public IActionResult JoinEvent(int? id)
         {
-            return RedirectToAction("Conformation");
+            return RedirectToAction("Conformation",id);
         }
 
-        [HttpPost]
-        public IActionResult Conformation(int? id)
-        {
-            return View("MyEvent");
-        }
     }
 }
