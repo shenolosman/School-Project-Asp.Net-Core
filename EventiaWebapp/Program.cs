@@ -16,9 +16,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapControllerRoute(
-    name: "joinevent",
-    pattern: "Event/JoinEvent/{id:int?}",
-    new { controller = "Event", action = "JoinEvent" });
 
 app.Run();

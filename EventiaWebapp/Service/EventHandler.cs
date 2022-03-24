@@ -33,27 +33,14 @@ namespace EventiaWebapp.Service
             };
             MyEvents = new List<Event>();
         }
-        public List<Event> GetEventsXDaysFromDate(DateTime date)
+        public void GetEventsXDaysFromDate(DateTime date)
         {
-            var getAllEvents = new List<Event>();
             Events.Sort((eventA, eventB) =>
                 DateTime.Compare(eventA.ThisYearsEvent(date), eventB.ThisYearsEvent(date)));
-            return getAllEvents;
         }
         public Event FindId(int id)
         {
             return Events.Find(x => x.Id == id);
-        }
-        public void JoinEvent(Event eventet, Attendee attende)
-        {
-            attende.ListEvent.Add(eventet);
-            if (attende.ListEvent.Count >= 0)
-            {
-
-                MyEvents.AddRange(attende.ListEvent);
-
-            }
-
         }
     }
 }
