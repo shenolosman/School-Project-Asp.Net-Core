@@ -1,8 +1,14 @@
-﻿@model int?
-@{
+﻿@{
     ViewBag.Title = "Event | My Events";
     int counter = 1;
 }
+<div class="row">
+    <p>
+        @*
+            _eventHandler.Attendees.Find(attendee =>attendee.AttendeeName.Contains("Shenol"));
+        *@
+    </p>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -10,6 +16,7 @@
             <th scope="col">Event Date</th>
             <th scope="col">Event Location</th>
             <th scope="col">Event Name</th>
+            <th scope="col">Organizer</th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +26,8 @@
                 <th scope="row">@counter</th>
                 <td>@item.EventDate</td>
                 <td> @item.EventLocation</td>
-                <td>@item.EventDate</td>
+                <td>@item.EventName</td>
+                <td>@item.Organizer.OrganizerName</td>
             </tr>
             counter++;
         }

@@ -3,10 +3,11 @@
     ViewBag.Title = "Event | Join Event";
     Event item = _eventHandler.FindId(Model.Value);
     
-    _eventHandler.JoinEvent(item.Id,_eventHandler.Attendees[0]);
+   // _eventHandler.JoinEvent(item,_eventHandler.Attendees[0]);
 }
+
 <div class="row">
-    @{
+  @{
         <div class="col">
             <div class="card listedCard">
                 <h5 class="card-header">@item.EventName</h5>
@@ -16,10 +17,12 @@
                     <a asp-controller="Event" asp-action="MyEvent"  class="btn btn-xm btn-primary">Go to MyEvent</a>
                     <a asp-controller="Event" asp-action="Index"  class="btn btn-xm btn-warning">Go Back to Events</a>
 
-                    Successfully 
+                  
                 </div>
+                <h5 class="card-header">You Added This Event To Your List!</h5>
             </div>
         </div>
         @*asp-route-id="@Model.Value"*@
-    }
+  }
 </div>
+

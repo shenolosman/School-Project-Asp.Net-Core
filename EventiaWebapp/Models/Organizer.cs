@@ -6,6 +6,6 @@
         public string OrganizerName { get; set; }
         public string OrganizerMail { get; set; }
         public string OrganizerPhone { get; set; }
-        public List<Event> Events { get; set; }
+        //  public List<Event> Events { get; set; }
     }
 }

@@ -8,8 +8,9 @@
         public DateTime EventDate { get; set; }
         public string Descriptiton { get; set; }
 
-        
+
         public List<Attendee> ListAttendee { get; set; }
+        // [ForeignKey("Organizer")]public int OrganizerId { get; set; }
         public Organizer Organizer { get; set; }
 
 

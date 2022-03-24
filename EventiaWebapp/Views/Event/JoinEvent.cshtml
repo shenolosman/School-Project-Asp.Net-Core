@@ -3,21 +3,23 @@
     ViewBag.Title = "Event | Join Event";
     Event item = _eventHandler.FindId(Model.Value);
     
-    _eventHandler.JoinEvent(item.Id,_eventHandler.Attendees[0]);
+    _eventHandler.JoinEvent(item,_eventHandler.Attendees[0]);
 }
 <div class="row">
     @{
-        <div class="col">
-            <div class="card listedCard">
-                <h5 class="card-header">@item.EventName</h5>
-                <div class="card-body">
-                    <h5 class="card-title">@item.EventDate in @item.EventLocation</h5>
-                    <p class="card-text">@item.Descriptiton</p>
-                    <a asp-controller="Event" asp-action="JoinEvent" asp-route-id="@item.Id" class="btn btn-xm btn-primary">Join This Event</a>
-                    <a asp-controller="Event" asp-action="Index"  class="btn btn-xm btn-warning">Go Back to Events</a>
-                </div>
+    <form method="post">
+    <div class="col">
+        <div class="card listedCard">
+            <h5 class="card-header">@item.EventName</h5>
+            <div class="card-body">
+                <h5 class="card-title">@item.EventDate in @item.EventLocation</h5>
+                <p class="card-text">@item.Descriptiton</p>
+                <input type="submit" class="btn btn-primary" value="Join This Event"/>
+                <a asp-controller="Event" asp-action="Index"  class="btn btn-warning">Go Back to Events</a>
             </div>
         </div>
+    </div>
+    </form>
         @*asp-route-id="@Model.Value"*@
     }
 </div>
