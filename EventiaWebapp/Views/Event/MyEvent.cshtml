@@ -5,7 +5,7 @@
 <div class="row">
     <p>
         @*
-            _eventHandler.Attendees.Find(attendee =>attendee.AttendeeName.Contains("Shenol"));
+            _eventHandler.Attendees.Find(attendee =>attendee.Name.Contains("Shenol"));
         *@
     </p>
 </div>
@@ -20,16 +20,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in _eventHandler.MyEvents)
+       @*foreach (var item in _eventHandler.MyEvents)
         {
             <tr>
                 <th scope="row">@counter</th>
-                <td>@item.EventDate</td>
-                <td> @item.EventLocation</td>
-                <td>@item.EventName</td>
-                <td>@item.Organizer.OrganizerName</td>
+                <td>@item.Date</td>
+                <td> @item.Location</td>
+                <td>@item.Title</td>
+                <td>@item.Organizer.Name</td>
             </tr>
             counter++;
-        }
+        }*@
     </tbody>
 </table>

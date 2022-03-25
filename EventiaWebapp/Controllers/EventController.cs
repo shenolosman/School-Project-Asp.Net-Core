@@ -1,12 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EventiaWebapp.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EventiaWebapp.Controllers
 {
     public class EventController : Controller
     {
-        public IActionResult Index(DateTime date)
+        private readonly EventsHandler _eventHandler;
+
+        public EventController(EventsHandler eventHandler)
         {
-            return View(date);
+            _eventHandler = eventHandler;
+        }
+        public IActionResult Index()
+        {
+            return View();
         }
         public IActionResult MyEvent()
         {
@@ -14,6 +21,7 @@ namespace EventiaWebapp.Controllers
         }
         public IActionResult JoinEvent(int id)
         {
+            //_eventHandler.Events.Find(x => x.Id == id);
             return View(id);
         }
         [HttpPost]

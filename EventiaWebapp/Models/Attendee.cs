@@ -1,11 +1,13 @@
-﻿namespace EventiaWebapp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EventiaWebapp.Models
 {
     public class Attendee
     {
-        public int Id { get; set; }
-        public string AttendeeName { get; set; }
-        public string AttendeeEmail { get; set; }
+        [Key] public int Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
         public string PhoneNummer { get; set; }
-        public List<Event> ListEvent { get; set; }
+        public ICollection<Event> ListEvent { get; set; }
     }
 }

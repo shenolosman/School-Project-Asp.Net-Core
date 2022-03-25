@@ -1,17 +1,16 @@
-﻿@model DateTime
+﻿@model int?
 @{
     ViewBag.Title = "Event | List of Events";
-    var date = DateTime.Today;
-    _eventHandler.GetEventsXDaysFromDate(date);
+  var eventList= _eventHandler.GetEvents().Result;
 }
 <div class="row">
-    @foreach (var events in _eventHandler.Events)
+    @foreach (var events in eventList)
     {
         <div class="col">
             <div class="card listedCard">
-                <h5 class="card-header">@events.EventName</h5>
+                <h5 class="card-header">@events.Title</h5>
                 <div class="card-body">
-                    <h5 class="card-title">@events.ThisYearsEvent(date).ToString("dd'/'MM") in @events.EventLocation</h5>
+                    <h5 class="card-title">@events.Date.ToShortDateString() (@events.Date.ToString("HH:mm")) in @events.Location</h5>
                     <p class="card-text">
                         @events.Descriptiton
                     </p>
