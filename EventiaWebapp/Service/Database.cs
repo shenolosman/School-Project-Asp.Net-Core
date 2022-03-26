@@ -4,14 +4,14 @@ namespace EventiaWebapp.Service;
 
 public class Database
 {
-    private EventDbContext _dbContext;
+    private readonly EventDbContext _dbContext;
 
     public Database(EventDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task Seed()
+    private void Seed()
     {
         var organizersList = new List<Organizer>
         {
@@ -23,12 +23,11 @@ public class Database
             },
             new()
             {
-                Id = 2, Name = "Bjorn Organisation",
+                Name = "Bjorn Organisation",
                 Mail = "bjorn@organisation.com",
                 Phone = "04443332200"
             }
         };
-        _dbContext.AddRangeAsync(organizersList);
         var eventsList = new List<Event>
         {
             new()
@@ -74,7 +73,7 @@ public class Database
                 Location = "Berlin",
                 Date = new DateTime(2022, 08, 1),
                 SeatsAvailable = 100,
-                Organizer = organizersList[0]
+                Organizer = organizersList[1]
             },
             new()
             {
@@ -83,7 +82,7 @@ public class Database
                 Location = "New York",
                 Date = new DateTime(2022, 09, 21),
                 SeatsAvailable = 100,
-                Organizer = organizersList[0]
+                Organizer = organizersList[1]
             },
             new()
             {
@@ -92,7 +91,7 @@ public class Database
                 Location = "Malmo",
                 Date = new DateTime(2022, 10, 25),
                 SeatsAvailable = 100,
-                Organizer = organizersList[0]
+                Organizer = organizersList[1]
             },
             new()
             {
@@ -101,18 +100,17 @@ public class Database
                 Location = "Stockholm",
                 Date = new DateTime(2022, 11, 20),
                 SeatsAvailable = 100,
-                Organizer = organizersList[0]
+                Organizer = organizersList[1]
             },
             new()
             {
                 Descriptiton = "Pop",
                 Title = "Miss Li", Location = "Stockholm",
                 Date = new DateTime(2022, 12, 1),
-                SeatsAvailable = 100,
-                Organizer = organizersList[0]
+                SeatsAvailable = 100,OrganizerId = 1,
+                Organizer = organizersList[1]
             }
         };
-        _dbContext.AddRangeAsync(eventsList);
         var attendeesList = new List<Attendee>
         {
             new()
@@ -128,16 +126,16 @@ public class Database
                 PhoneNummer = "0721112244"
             }
         };
-        _dbContext.AddRangeAsync(attendeesList);
+        _dbContext.AddRange(organizersList);
+        _dbContext.AddRange(eventsList);
+        _dbContext.AddRange(attendeesList);
+        _dbContext.SaveChanges();
     }
 
     public void PrepDatabase()
     {
-        using var ctx = new EventDbContext();
-
-        ctx.Database.EnsureDeleted();
-        ctx.Database.EnsureCreated();
+        _dbContext.Database.EnsureDeleted();
+        _dbContext.Database.EnsureCreated();
         Seed();
-
     }
 }

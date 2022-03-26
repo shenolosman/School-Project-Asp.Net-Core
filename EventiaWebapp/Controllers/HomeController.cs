@@ -8,6 +8,5 @@ namespace EventiaWebapp.Controllers
         {
             return View();
         }
-        
     }
 }

@@ -1,6 +1,5 @@
 using EventiaWebapp.Service;
 using Microsoft.EntityFrameworkCore;
-//using EventsHandler = EventiaWebapp.Service.EventsHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +24,10 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     "default",
-    "{controller=Home}/{action=Index}/{id?}");
+    "{controller=Home}/{action=Index}");
 
 app.MapControllerRoute(
-    name: "event",
+    name: "conformation",
     pattern: "{controller=Event}/{action=JoinEvent}/{id?}");
 
 using (var scope = app.Services.CreateScope())

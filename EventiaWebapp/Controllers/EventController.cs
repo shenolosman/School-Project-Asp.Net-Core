@@ -21,13 +21,16 @@ namespace EventiaWebapp.Controllers
         }
         public IActionResult JoinEvent(int id)
         {
-            //_eventHandler.Events.Find(x => x.Id == id);
-            return View(id);
+            var join = _eventHandler.GetEvents().Find(x => x.Id == id);
+            return View(join);
         }
-        [HttpPost]
-        public IActionResult JoinEvent(int? id)
+        public IActionResult Conformation(int id)
         {
-            return View("Conformation", id);
+            var attente = _eventHandler.GetAttendes(1);
+            _eventHandler.BookEvent(attente.Id, id);
+            var confirmedEvent = _eventHandler.GetEvents()
+                .Find(e => e.Id == id);
+            return View(confirmedEvent);
         }
     }
 }

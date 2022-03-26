@@ -1,7 +1,6 @@
-﻿@model int?
-@{
+﻿@{
     ViewBag.Title = "Event | List of Events";
-  var eventList= _eventHandler.GetEvents().Result;
+    var eventList = _eventHandler.GetEvents();
 }
 <div class="row">
     @foreach (var events in eventList)

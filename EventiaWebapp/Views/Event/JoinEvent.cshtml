@@ -1,28 +1,17 @@
-﻿@model int?
+﻿@model Event?
 @{
     ViewBag.Title = "Event | Join Event";
-    // Event item = _eventHandler.FindId(Model.Value);
-    var id = Model.Value;
-    var getevent=_eventHandler.GetEvents().Result;
-    var selectevent = getevent.First(x => x.Id == id);
 }
 <div class="row">
-    @{
-        if (Model!=null)
-        {
-            <form method="post">
-                <div class="col">
-                    <div class="card listedCard">
-                        <h5 class="card-header">@selectevent.Title</h5>
-                        <div class="card-body">
-                            <h5 class="card-title">@selectevent.Date in @selectevent.Location</h5>
-                            <p class="card-text">@selectevent.Descriptiton</p>
-                            <input type="submit" class="btn btn-primary" value="Join This Event"/>
-                            <a asp-controller="Event" asp-action="Index"  class="btn btn-warning">Go Back to Events</a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        }
-    }
+    <div class="col">
+        <div class="card listedCard">
+            <h5 class="card-header">@Model.Title</h5>
+            <div class="card-body">
+                <h5 class="card-title">@Model.Date.ToShortDateString() (@Model.Date.ToString("HH:mm")) in @Model.Location</h5>
+                <p class="card-text">@Model.Descriptiton</p>
+                <a asp-controller="Event" asp-action="Conformation" asp-route-Id="@Model.Id" class="btn btn-primary" type="Submit">Join This Event</a>
+                <a asp-controller="Event" asp-action="Index" class="btn btn-warning">Go Back to Events</a>
+            </div>
+        </div>
+    </div>
 </div>
