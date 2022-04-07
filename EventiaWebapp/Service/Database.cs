@@ -1,4 +1,5 @@
-﻿using EventiaWebapp.Models;
+﻿using EventiaWebapp.Data;
+using EventiaWebapp.Models;
 
 namespace EventiaWebapp.Service;
 

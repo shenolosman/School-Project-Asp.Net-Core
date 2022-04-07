@@ -1,3 +1,4 @@
+using EventiaWebapp.Data;
 using EventiaWebapp.Service;
 using Microsoft.EntityFrameworkCore;
 

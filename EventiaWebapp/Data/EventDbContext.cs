@@ -1,7 +1,7 @@
 ﻿using EventiaWebapp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventiaWebapp.Service
+namespace EventiaWebapp.Data
 {
     public class EventDbContext : DbContext
     {
