@@ -12,7 +12,7 @@ public class Database
         _dbContext = dbContext;
     }
 
-    private void Seed()
+    private async Task Seed()
     {
         var organizersList = new List<Organizer>
         {
@@ -127,16 +127,35 @@ public class Database
                 PhoneNummer = "0721112244"
             }
         };
-        _dbContext.AddRange(organizersList);
-        _dbContext.AddRange(eventsList);
-        _dbContext.AddRange(attendeesList);
-        _dbContext.SaveChanges();
+        await _dbContext.AddRangeAsync(organizersList);
+        await _dbContext.AddRangeAsync(eventsList);
+        await _dbContext.AddRangeAsync(attendeesList);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public void PrepDatabase()
+    private async Task Recreate()
     {
-        _dbContext.Database.EnsureDeleted();
-        _dbContext.Database.EnsureCreated();
-        Seed();
+        await _dbContext.Database.EnsureDeletedAsync();
+        await _dbContext.Database.EnsureCreatedAsync();
+    }
+
+    public async Task RecreateAndSeed()
+    {
+        await Recreate();
+        await Seed();
+    }
+
+    public async Task CreateIfNotExist()
+    {
+        await _dbContext.Database.EnsureCreatedAsync();
+    }
+
+    public async Task CreateAndSeedIfNotExist()
+    {
+        bool didCreateDatabase = await _dbContext.Database.EnsureCreatedAsync();
+        if (didCreateDatabase)
+        {
+            await Seed();
+        }
     }
 }

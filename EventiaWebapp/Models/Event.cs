@@ -17,6 +17,9 @@ namespace EventiaWebapp.Models
         public Organizer? Organizer { get; set; }
 
 
+        public List<User> Organizers { get; set; }
+        public List<User> Attendeess { get; set; }
+
         //public DateTime ThisYearsEvent(DateTime today)
         //{
         //    return new DateTime(DateTime.Today.Year, Date.Month, Date.Day);
