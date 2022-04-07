@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<User> _singInManager
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -6,7 +8,7 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css">
     <link href="~/StyleSheet.css" rel="stylesheet" />
-    @await RenderSectionAsync("Style",false)
+    @await RenderSectionAsync("Styles",false)
 </head>
 <body>
 
@@ -24,16 +26,31 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Event" asp-action="Index">Events</a>
-                        <li class="nav-item">
-                        <li>
-                            <a class="nav-link" asp-controller="Event" asp-action="MyEvent">My Events</a>
                         </li>
+                        @if (_singInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Event" asp-action="MyEvent">My Events</a>
+                            </li>
+
+                            @if (User.IsInRole("Organisator")||User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Event" asp-action="MyEvent">Add New Event</a>
+                                </li>
+                            }
+                            @if ( User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">AdminTool</a>
+                                </li>
+                            }
+
+                        }
+                       
                     </ul>
-                    <ul class="d-flex navbar-nav">
-                        <li>
-                            <a class="nav-link btn btn-outline-success" asp-controller="Home" asp-action="Index">Log In</a>
-                        </li>
-                    </ul>
+                    @*This partial for the login *@
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -45,10 +62,10 @@
     </main>
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container">
-            &copy; Shenol -<i>Asp.Net Core </i>- 1st Project
+            &copy; Shenol -<i>Asp.Net Core </i>- 1st and 2st Project
         </div>
     </footer>
     <script src="~/bootstrap/js/bootstrap.min.js"></script>
-    @await RenderSectionAsync("Script",false)
+    @await RenderSectionAsync("Scripts",false)
 </body>
 </html>

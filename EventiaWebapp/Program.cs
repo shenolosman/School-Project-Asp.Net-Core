@@ -15,6 +15,15 @@ var connectionString = builder.Configuration.GetConnectionString("default");
 
 builder.Services.AddDbContext<EventDbContext>(options => options.UseSqlServer(connectionString));
 
+builder.Services.AddRazorPages(options =>
+    {
+        options.Conventions.AllowAnonymousToAreaPage("/Identity", "/Login");
+        options.Conventions.AuthorizeAreaFolder("/Identity", "/Logout");
+        options.Conventions.AuthorizeAreaFolder("/Identity", "/RegisterConfirmation");
+    }
+);
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<EventDbContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -46,13 +55,12 @@ using (var scope = app.Services.CreateScope())
     {
         await db.RecreateAndSeed();
     }
-    var userManager = scope.ServiceProvider
-        .GetRequiredService<UserManager<User>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
-    //var eventsList = scope.ServiceProvider
-    //    .GetRequiredService<EventHandler>();
+    var eventsList = scope.ServiceProvider.GetRequiredService<EventHandler>();
 
-    //eventsList.Initialize(userManager.Users.ToList());
+    //var users = await userManager?.Users.ToListAsync()!;
+    //eventsList.Initialize(users);
 }
 
 app.Run();
