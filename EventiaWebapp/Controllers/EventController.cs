@@ -3,6 +3,7 @@ using EventiaWebapp.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventiaWebapp.Controllers
 {
@@ -68,6 +69,51 @@ namespace EventiaWebapp.Controllers
         //listing organisators events list
         //should add new actionresult for adding new event
 
+        [Authorize(Roles = "Organisator")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            //var eventet = await _dbContext.Events.FindAsync(id);
+            var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
 
+            if (eventet == null)
+            {
+                return NotFound();
+            }
+            return View(eventet);
+        }
+        [Authorize(Roles = "Organisator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Event eventet)
+        {
+            if (id != eventet.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _eventHandler.UpdateEvent(eventet);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+
+                }
+                return RedirectToAction("Index");
+            }
+            return View(eventet);
+        }
+
+        public IActionResult Delete()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -32,9 +32,9 @@ namespace EventiaWebapp.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {

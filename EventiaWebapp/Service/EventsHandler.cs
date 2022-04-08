@@ -55,6 +55,15 @@ public class EventsHandler
         _dbContext.SaveChanges();
     }
 
+    public async Task UpdateEvent(Event eventet)
+    {
+        _dbContext.Update(eventet);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    // public async Task<bool> AnyEventExists(int id) => await _dbContext.Events.AnyAsync(e => e.Id == id);
+
+
     //public void AddNewEvent(string title, string description, DateTime eventDate, string location, int seatsavailable, bool isOrganizer, User user)
     //{
     //    var newEvent = new Event()
