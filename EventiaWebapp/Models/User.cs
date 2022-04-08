@@ -5,10 +5,10 @@ namespace EventiaWebapp.Models
 {
     public class User : IdentityUser
     {
-        [InverseProperty("Organizers")]
-        public List<Event>? HostedEvents { get; set; }
-        [InverseProperty("Attendeess")]
+        [InverseProperty("Organizer")]
+        public IEnumerable<Event>? HostedEvents { get; set; }
+        [InverseProperty("Attendees")]
         public int? JoinedEventsId { get; set; }
-        public List<Event>? JoinedEvents { get; set; }
+        public IEnumerable<Event>? JoinedEvents { get; set; }
     }
 }

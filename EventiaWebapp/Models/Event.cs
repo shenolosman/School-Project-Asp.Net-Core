@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventiaWebapp.Models
 {
@@ -11,18 +10,9 @@ namespace EventiaWebapp.Models
         public DateTime Date { get; set; }
         public string Descriptiton { get; set; }
         public int SeatsAvailable { get; set; }
+        public User? Organizer { get; set; }
+        //public IEnumerable<User>? Attendees { get; set; }
+        public List<User>? Attendees { get; set; }
 
-        public ICollection<Attendee>? Attendees { get; set; }
-        [ForeignKey("Organizer")] public int OrganizerId { get; set; }
-        public Organizer? Organizer { get; set; }
-
-
-        public User OneOrganizer { get; set; }
-        public List<User> Attendeess { get; set; }
-
-        //public DateTime ThisYearsEvent(DateTime today)
-        //{
-        //    return new DateTime(DateTime.Today.Year, Date.Month, Date.Day);
-        //}
     }
 }

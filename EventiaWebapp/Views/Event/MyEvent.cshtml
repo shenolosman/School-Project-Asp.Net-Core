@@ -1,11 +1,15 @@
-﻿@{
+﻿@inject UserManager<User> _userManager
+@{
     ViewBag.Title = "Event | My Events";
-    int counter = 1;
-    var myEvents = _eventHandler.GetMyEvents(1);
-    var attendee = _eventHandler.GetAttendes(1);
+    var counter = 1;
+    var user =await _userManager.GetUserAsync(User);
+    var aa = _eventHandler.GetAttendee(user.Id);
+    var myEvents = _eventHandler.GetMyEvents(aa);
+    var attendee = _eventHandler.GetAttendee(_userManager.GetUserId(User));
+
 }
 <div class="row">
-    <h3>@attendee.Name's events list</h3>
+    <h3>@attendee.UserName's events list</h3>
 </div>
 @if (myEvents.Count > 0)
 {
@@ -28,13 +32,10 @@
                     <td>@item.Title</td>
                     <td>@item.Location</td>
                     <td>@item.Date</td>
-                    <td>@item.Organizer.Name</td>
+                    <td>@item.Organizer?.UserName</td>
                 </tr>
                 counter++;
             }
-
-
-
         </tbody>
     </table>
 }
@@ -42,7 +43,7 @@ else
 {
     <div>
         <h4>
-            @attendee.Name still has not event yet!
+            @attendee.UserName has not event yet!
         </h4>
     </div>
 }

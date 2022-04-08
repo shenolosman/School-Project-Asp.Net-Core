@@ -10,8 +10,8 @@ namespace EventiaWebapp.Data
         {
         }
         //organizer and attendess will be deleted
-        public DbSet<Organizer> Organizer { get; set; }
-        public DbSet<Attendee> Attendees { get; set; }
+        //  public DbSet<Organizer> Organizer { get; set; }
+        //   public DbSet<Attendee> Attendees { get; set; }
         public DbSet<Event> Events { get; set; }
     }
 }

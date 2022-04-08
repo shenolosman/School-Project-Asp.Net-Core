@@ -50,7 +50,6 @@ public class Database
                 Date = new DateTime(2022, 06, 15),
                 SeatsAvailable = 100
             }
-
         };
         var hostedEventList = new List<Event>
         {
@@ -78,20 +77,22 @@ public class Database
                 Date = new DateTime(2022, 12, 1),
                 SeatsAvailable = 100
             }
-
         };
 
-        var attendeeUser = new User() { UserName = "attendee@mail.com", Email = "attendee@mail.com", JoinedEvents = attendesEvents1 };
-
         var organisatorUser = new User() { UserName = "organisator@mail.com", Email = "organisator@mail.com", HostedEvents = hostedEventList };
-
+        var attendeeUser = new User() { UserName = "attendee@mail.com", Email = "attendee@mail.com", JoinedEvents = attendesEvents1 };
         var adminUser = new User() { UserName = "admin@mail.com", Email = "admin@mail.com" };
+
 
         await _userManager.CreateAsync(attendeeUser, "Passw0rd!");
         await _userManager.CreateAsync(organisatorUser, "Passw0rd!");
         await _userManager.CreateAsync(adminUser, "Passw0rd!");
 
-
+        foreach (var item in attendesEvents1)
+        {
+            var orga = item.Organizer = organisatorUser;
+            attendeeUser.HostedEvents = orga.HostedEvents;
+        }
         //attendeeUser.JoinedEvents = attendesEvents1[0];
         //organisatorUser.HostedEvents = hostedEventList[0];
 

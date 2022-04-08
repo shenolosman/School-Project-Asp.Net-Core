@@ -1,12 +1,13 @@
 ﻿@inject SignInManager<User> _singInManager
-
+@inject IWebHostEnvironment _environment
+@inject UserManager<User> _userManager
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css">
     <link href="~/StyleSheet.css" rel="stylesheet" />
     @await RenderSectionAsync("Styles",false)
 </head>
@@ -32,22 +33,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Event" asp-action="MyEvent">My Events</a>
                             </li>
-
-                            @if (User.IsInRole("Organisator")||User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Event" asp-action="MyEvent">Add New Event</a>
-                                </li>
-                            }
-                            @if ( User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">AdminTool</a>
-                                </li>
-                            }
-
                         }
-                       
                     </ul>
                     @*This partial for the login *@
                     <partial name="_LoginPartial" />
@@ -65,7 +51,7 @@
             &copy; Shenol -<i>Asp.Net Core </i>- 1st and 2st Project
         </div>
     </footer>
-    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts",false)
 </body>
 </html>

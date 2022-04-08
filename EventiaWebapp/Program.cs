@@ -5,35 +5,61 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("default");
 
 builder.Services.AddControllersWithViews();
+// inside to addrazorpages
 builder.Services.AddRazorPages();
+//options =>
+//{
+//    options.Conventions.AllowAnonymousToAreaPage("/Identity", "/Login");
+//    options.Conventions.AuthorizeAreaFolder("/Identity", "/Logout");
+//    options.Conventions.AuthorizeAreaFolder("/Identity", "/RegisterConfirmation");
+//}
+
 builder.Services.AddScoped<EventsHandler>();
 builder.Services.AddScoped<Database>();
 
-var connectionString = builder.Configuration.GetConnectionString("default");
+
 
 builder.Services.AddDbContext<EventDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddRazorPages(options =>
-    {
-        options.Conventions.AllowAnonymousToAreaPage("/Identity", "/Login");
-        options.Conventions.AuthorizeAreaFolder("/Identity", "/Logout");
-        options.Conventions.AuthorizeAreaFolder("/Identity", "/RegisterConfirmation");
-    }
-);
+//builder.Services.AddControllersWithViews();
+
+//if (builder.Environment.IsDevelopment())
+//{
+//    builder.Services.Configure<IdentityOptions>(options =>
+//    {
+//        // Default Password settings.
+//        options.Password.RequireDigit = false;
+//        options.Password.RequireLowercase = false;
+//        options.Password.RequireNonAlphanumeric = false;
+//        options.Password.RequireUppercase = false;
+//        options.Password.RequiredLength = 6;
+//        options.Password.RequiredUniqueChars = 1;
+//    });
+//}
+
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<EventDbContext>();
 
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+//from Dennis
+//builder.Services.AddAuthorization(o => { o.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); });
+
+
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapRazorPages();
+//from Dennis
+//app.MapDefaultControllerRoute();
 
 app.MapControllerRoute(
     "default",
@@ -55,12 +81,12 @@ using (var scope = app.Services.CreateScope())
     {
         await db.RecreateAndSeed();
     }
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    //    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
-    var eventsList = scope.ServiceProvider.GetRequiredService<EventHandler>();
+    //    var eventsList = scope.ServiceProvider.GetRequiredService<EventsHandler>();
 
-    //var users = await userManager?.Users.ToListAsync()!;
-    //eventsList.Initialize(users);
+    //    var users = await userManager?.Users.ToListAsync()!;
+    //    eventsList.Initialize(users);
 }
 
 app.Run();
