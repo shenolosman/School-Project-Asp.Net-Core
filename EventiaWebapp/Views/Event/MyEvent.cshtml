@@ -1,15 +1,15 @@
-﻿@inject UserManager<User> _userManager
+﻿@using System.Globalization
+@inject UserManager<User> _userManager
 @{
     ViewBag.Title = "Event | My Events";
     var counter = 1;
     var user =await _userManager.GetUserAsync(User);
-    var aa = _eventHandler.GetAttendee(user.Id);
-    var myEvents = _eventHandler.GetMyEvents(aa);
-    var attendee = _eventHandler.GetAttendee(_userManager.GetUserId(User));
-
+    var userId = _eventHandler.GetAttendee(user.Id);
+    var myEvents = _eventHandler.GetMyEvents(userId);
+    var attendeUsername = user.UserName.Split("@")[0];
 }
 <div class="row">
-    <h3>@attendee.UserName's events list</h3>
+    <h3>@attendeUsername's events list</h3>
 </div>
 @if (myEvents.Count > 0)
 {
@@ -33,6 +33,7 @@
                     <td>@item.Location</td>
                     <td>@item.Date</td>
                     <td>@item.Organizer?.UserName</td>
+                    <td><a asp-action="DeleteMyEvent" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
                 </tr>
                 counter++;
             }
@@ -43,7 +44,7 @@ else
 {
     <div>
         <h4>
-            @attendee.UserName has not event yet!
+            @attendeUsername has not event yet!
         </h4>
     </div>
 }

@@ -48,8 +48,9 @@ public class EventsHandler
             .Where(z => z.Organizer.Id == organizer.Id).ToList();
         return events;
     }
-    public void AddEvent(Event newEvent)
+    public void AddEvent(Event newEvent, User user)
     {
+        newEvent.Organizer = user;
         _dbContext.Add(newEvent);
         _dbContext.SaveChanges();
     }

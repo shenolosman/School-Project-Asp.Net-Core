@@ -83,11 +83,9 @@ public class Database
         var attendeeUser = new User() { UserName = "attendee@mail.com", Email = "attendee@mail.com", JoinedEvents = attendesEvents1 };
         var adminUser = new User() { UserName = "admin@mail.com", Email = "admin@mail.com" };
 
-
         await _userManager.CreateAsync(attendeeUser, "Passw0rd!");
         await _userManager.CreateAsync(organisatorUser, "Passw0rd!");
         await _userManager.CreateAsync(adminUser, "Passw0rd!");
-
         foreach (var item in attendesEvents1)
         {
             var orga = item.Organizer = organisatorUser;
@@ -99,6 +97,7 @@ public class Database
         await _userManager.AddToRoleAsync(attendeeUser, "Attendee");
         await _userManager.AddToRoleAsync(organisatorUser, "Organisator");
         await _userManager.AddToRoleAsync(adminUser, "Admin");
+
 
         #region old seed lists
         /*

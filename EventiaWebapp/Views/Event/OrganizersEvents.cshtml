@@ -1,0 +1,50 @@
+﻿@model IEnumerable<EventiaWebapp.Models.Event>
+@inject UserManager<User> _userManager
+@{
+    ViewBag.Title = "Event | Organizers Events";
+    var counter = 1;
+    var user=await _userManager.GetUserAsync(User);
+    var organizersList = _eventHandler.GetOrganizerEvents(user);
+    var organizerUsername = user.UserName.Split("@")[0];
+}
+<h1>Organized events of <strong>@organizerUsername</strong></h1>
+<br/>
+<p>
+    <a asp-action="AddEvent" class="btn btn-success">Create New Event</a>
+</p>
+@if (organizersList.Count > 0)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Event Name</th>
+            <th scope="col">Event Location</th>
+            <th scope="col">Event Date</th>
+            <th scope="col">Organizer</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in organizersList)
+        {
+            <tr>
+                <th scope="row">@counter</th>
+                <td>@item.Title</td>
+                <td>@item.Location</td>
+                <td>@item.Date</td>
+                <td>@item.Organizer?.UserName</td>
+                <td><a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> | <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
+            </tr>
+            counter++;
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        <h4>
+            @organizerUsername has not event yet!
+        </h4>
+    </div>
+}

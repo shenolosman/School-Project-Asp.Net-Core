@@ -39,6 +39,32 @@ namespace EventiaWebapp.Controllers
                 .Find(e => e.Id == id);
             return View(confirmedEvent);
         }
+
+        public IActionResult OrganizersEvents()
+        {
+            return View();
+        }
+        [Authorize(Roles = "Organisator")]
+        public IActionResult AddEvent()
+        {
+            return View();
+        }
+        [Authorize(Roles = "Organisator")]
+        [HttpPost]
+        public async Task<IActionResult> AddEvent(Event eventet)
+        {
+            if (ModelState.IsValid)
+            {
+                var eventorganisator = await _userManager.GetUserAsync(User);
+                _eventHandler.AddEvent(eventet, eventorganisator);
+                return View("OrganizersEvents");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         //listing organisators events list
         //should add new actionresult for adding new event
 
