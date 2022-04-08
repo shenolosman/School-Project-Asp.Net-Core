@@ -55,4 +55,19 @@ public class EventsHandler
         _dbContext.Remove(eventet);
         await _dbContext.SaveChangesAsync();
     }
+
+    public void DeleteMyEvent(string attendeeId, int eventId)
+    {
+        var findEvent = _dbContext.Events
+            .Include(x => x.Attendees)
+            .FirstOrDefault(x => x.Id == eventId);
+
+        var findAttendee = _dbContext.Users
+            .Include(x => x.JoinedEvents)
+            .FirstOrDefault(x => x.Id == attendeeId);
+
+        findEvent.Attendees.Remove(findAttendee);
+        //Kan addera spots
+        _dbContext.SaveChanges();
+    }
 }

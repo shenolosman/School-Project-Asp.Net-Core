@@ -128,5 +128,19 @@ namespace EventiaWebapp.Controllers
             _eventHandler.DeleteEvent(eventet);
             return RedirectToAction(nameof(OrganizersEvents));
         }
+
+        public IActionResult DeleteMyEvent(int? id)
+        {
+            var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
+            return View(eventet);
+        }
+        [HttpPost, ActionName("DeleteMyEvent")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteMyEventConfirmed(int id)
+        {
+            var attenteId = _userManager.GetUserId(User);
+            _eventHandler.DeleteMyEvent(attenteId, id);
+            return RedirectToAction(nameof(MyEvent));
+        }
     }
 }
