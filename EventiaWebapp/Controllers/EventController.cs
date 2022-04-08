@@ -40,7 +40,6 @@ namespace EventiaWebapp.Controllers
                 .Find(e => e.Id == id);
             return View(confirmedEvent);
         }
-
         public IActionResult OrganizersEvents()
         {
             return View();
@@ -58,17 +57,13 @@ namespace EventiaWebapp.Controllers
             {
                 var eventorganisator = await _userManager.GetUserAsync(User);
                 _eventHandler.AddEvent(eventet, eventorganisator);
-                return View("OrganizersEvents");
+                return View(nameof(OrganizersEvents));
             }
             else
             {
                 return View();
             }
         }
-
-        //listing organisators events list
-        //should add new actionresult for adding new event
-
         [Authorize(Roles = "Organisator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -76,7 +71,6 @@ namespace EventiaWebapp.Controllers
             {
                 return NotFound();
             }
-            //var eventet = await _dbContext.Events.FindAsync(id);
             var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
 
             if (eventet == null)
@@ -106,14 +100,33 @@ namespace EventiaWebapp.Controllers
                     return NotFound();
 
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(OrganizersEvents));
             }
             return View(eventet);
         }
-
-        public IActionResult Delete()
+        [Authorize(Roles = "Organisator")]
+        public async Task<IActionResult> Delete(int? id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
+            if (eventet == null)
+            {
+                return NotFound();
+            }
+
+            return View(eventet);
+        }
+        [Authorize(Roles = "Organisator")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
+            _eventHandler.DeleteEvent(eventet);
+            return RedirectToAction(nameof(OrganizersEvents));
         }
     }
 }

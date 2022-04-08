@@ -8,7 +8,6 @@ namespace EventiaWebapp.Service;
 public class EventsHandler
 {
     private readonly EventDbContext _dbContext;
-
     public EventsHandler(EventDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -17,11 +16,7 @@ public class EventsHandler
     {
         return _dbContext.Events.ToList();
     }
-
-    public User GetAttendee(string id)
-    {
-        return _dbContext.Users.Include(x => x.JoinedEvents).ThenInclude(c => c.Organizer).First(p => p.Id == id);
-    }
+    public User GetAttendee(string id) => _dbContext.Users.Include(x => x.JoinedEvents).ThenInclude(c => c.Organizer).First(p => p.Id == id);
     public void BookEvent(string attendeeId, int eventId)
     {
         var findEvent = _dbContext.Events
@@ -36,12 +31,7 @@ public class EventsHandler
         //Kan addera spots
         _dbContext.SaveChanges();
     }
-
-    public List<Event> GetMyEvents(User user)
-    {
-        return user.JoinedEvents.ToList();
-    }
-
+    public List<Event> GetMyEvents(User user) => user.JoinedEvents.ToList();
     public List<Event> GetOrganizerEvents(User organizer)
     {
         var events = _dbContext.Events.Include(x => x.Organizer)
@@ -54,32 +44,15 @@ public class EventsHandler
         _dbContext.Add(newEvent);
         _dbContext.SaveChanges();
     }
-
     public async Task UpdateEvent(Event eventet)
     {
         _dbContext.Update(eventet);
         await _dbContext.SaveChangesAsync();
     }
 
-    // public async Task<bool> AnyEventExists(int id) => await _dbContext.Events.AnyAsync(e => e.Id == id);
-
-
-    //public void AddNewEvent(string title, string description, DateTime eventDate, string location, int seatsavailable, bool isOrganizer, User user)
-    //{
-    //    var newEvent = new Event()
-    //    {
-    //        Title = title,
-    //        Date = eventDate,
-    //        Descriptiton = description,
-    //        Location = location,
-    //        SeatsAvailable = seatsavailable
-    //    };
-    //    _dbContext.Add(newEvent);
-    //    if (isOrganizer)
-    //    {
-    //        newEvent.Organizer = user;
-    //    }
-
-    //    _dbContext.SaveChanges();
-    //}
+    public async Task DeleteEvent(Event eventet)
+    {
+        _dbContext.Remove(eventet);
+        await _dbContext.SaveChangesAsync();
+    }
 }
