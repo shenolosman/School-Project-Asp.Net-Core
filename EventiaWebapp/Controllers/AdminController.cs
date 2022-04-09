@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EventiaWebapp.Models;
+using EventiaWebapp.Service;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventiaWebapp.Controllers
@@ -6,44 +9,50 @@ namespace EventiaWebapp.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        private readonly UserManager<User> _userManager;
+        private readonly EventsHandler _eventHandler;
+
+        public AdminController(UserManager<User> userManager, EventsHandler eventHandler)
+        {
+            _userManager = userManager;
+            _eventHandler = eventHandler;
+        }
         public ActionResult Index()
         {
-            return View();
+            var users = _userManager.Users.ToList();
+            return View(users);
+
         }
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> EditUser(string id)
         {
-            return View();
+            var organisatorUser = await _userManager.FindByIdAsync(id);
+
+            return View(organisatorUser);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditUser(User user)
         {
-            try
-            {
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        public ActionResult Delete(int? id)
-        {
-            return View();
-        }
+            var organisatorUser = await _userManager.FindByIdAsync(user.Id);
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            try
+            if (organisatorUser == null) return NotFound();
+            bool userTrue = user.isOrganizer;
+            if (user.isOrganizer == true)
             {
-                return RedirectToAction("Index");
+                userTrue = organisatorUser.isOrganizer = true;
+                await _userManager.AddToRoleAsync(organisatorUser, "Organisator");
+                await _eventHandler.ChangeStatusofUser(userTrue, organisatorUser);
+                return RedirectToAction(nameof(Index));
             }
-            catch
+            else if (user.isOrganizer == false)
             {
-                return View();
+                userTrue = organisatorUser.isOrganizer = false;
+                await _userManager.AddToRoleAsync(organisatorUser, "Attendee");
+                await _userManager.RemoveFromRoleAsync(organisatorUser, "Organisator");
+                await _eventHandler.ChangeStatusofUser(userTrue, organisatorUser);
+                return RedirectToAction(nameof(Index));
             }
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

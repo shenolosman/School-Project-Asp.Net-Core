@@ -16,7 +16,6 @@ public class Database
         _userManager = userManager;
         _roleManager = roleManager;
     }
-
     private async Task Seed()
     {
         await _roleManager.CreateAsync(new IdentityRole("Attendee"));
@@ -24,7 +23,7 @@ public class Database
         await _roleManager.CreateAsync(new IdentityRole("Admin"));
 
 
-        var attendesEvents1 = new List<Event>
+        var attendesEvents = new List<Event>
         {
             new()
             {
@@ -79,27 +78,24 @@ public class Database
             }
         };
 
-        var organisatorUser = new User() { UserName = "organisator@mail.com", Email = "organisator@mail.com", HostedEvents = hostedEventList };
-        var attendeeUser = new User() { UserName = "attendee@mail.com", Email = "attendee@mail.com", JoinedEvents = attendesEvents1 };
+        var organisatorUser = new User() { UserName = "organisator@mail.com", Email = "organisator@mail.com", HostedEvents = hostedEventList, isOrganizer = true };
+        var attendeeUser = new User() { UserName = "attendee@mail.com", Email = "attendee@mail.com", JoinedEvents = attendesEvents };
         var adminUser = new User() { UserName = "admin@mail.com", Email = "admin@mail.com" };
 
         await _userManager.CreateAsync(attendeeUser, "Passw0rd!");
         await _userManager.CreateAsync(organisatorUser, "Passw0rd!");
         await _userManager.CreateAsync(adminUser, "Passw0rd!");
-        foreach (var item in attendesEvents1)
+        foreach (var item in attendesEvents)
         {
-            var orga = item.Organizer = organisatorUser;
-            attendeeUser.HostedEvents = orga.HostedEvents;
+            var organizator = item.Organizer = organisatorUser;
+            attendeeUser.HostedEvents = organizator.HostedEvents;
         }
-        //attendeeUser.JoinedEvents = attendesEvents1[0];
-        //organisatorUser.HostedEvents = hostedEventList[0];
 
         await _userManager.AddToRoleAsync(attendeeUser, "Attendee");
         await _userManager.AddToRoleAsync(organisatorUser, "Organisator");
         await _userManager.AddToRoleAsync(adminUser, "Admin");
 
-
-        #region old seed lists
+        #region old seed lists without identity and roles
         /*
         var organizersList = new List<Organizer>
         {
@@ -223,8 +219,6 @@ public class Database
         await _dbContext.AddRangeAsync(attendeesList);
         */
         #endregion
-
-
 
         await _dbContext.SaveChangesAsync();
     }

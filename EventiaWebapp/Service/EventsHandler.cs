@@ -17,6 +17,9 @@ public class EventsHandler
         return _dbContext.Events.ToList();
     }
     public User GetAttendee(string id) => _dbContext.Users.Include(x => x.JoinedEvents).ThenInclude(c => c.Organizer).First(p => p.Id == id);
+
+    public List<User> GetAllAttendee() =>
+        _dbContext.Users.Include(x => x.JoinedEvents).ThenInclude(c => c.Organizer).ToList();
     public void BookEvent(string attendeeId, int eventId)
     {
         var findEvent = _dbContext.Events
@@ -69,5 +72,15 @@ public class EventsHandler
         findEvent.Attendees.Remove(findAttendee);
         //Kan addera spots
         _dbContext.SaveChanges();
+    }
+
+    public async Task ChangeStatusofUser(bool isorganizer, User user)
+    {
+        user.isOrganizer = isorganizer;
+        //organisatorUser.isOrganizer = false;
+        //await _userManager.AddToRoleAsync(organisatorUser, "Attendee");
+        _dbContext.Users.Update(user);
+        await _dbContext.SaveChangesAsync();
+
     }
 }

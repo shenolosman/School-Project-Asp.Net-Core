@@ -1,0 +1,52 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Index";
+
+}
+<br />
+<h1>Users List</h1>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isOrganizer)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (!item.UserName.Contains("admin@mail.com"))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(modelItem => item.isOrganizer,new {disabled="true"})
+                    </td>
+                    <td>
+
+                        @*  <input type="hidden" asp-for="@item.Id" />*@
+
+                        <a asp-controller="Admin" asp-action="EditUser" type="submit" class="btn btn-danger" asp-route-id="@item.Id">Edit</a>
+
+                        @* @Html.CheckBoxFor(modelItem => item.isOrganizer,new {@class="checkbox"})*@
+                        @*Can write inside of A tag    asp-controller="Admin" asp-action="ChangeStatusOfUser"   asp-route-Id="@item.Id" *@
+                        @*    <a checked="@(item.isOrganizer == true ? "checked" : null)" type="Submit" class="btn btn-primary">Change</a>*@
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
