@@ -1,14 +1,11 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using EventiaWebapp.Models
-
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+﻿@inject SignInManager<User> _signInManager
+@inject UserManager<User> _userManager
 
 <ul class="d-flex navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if (_signInManager.IsSignedIn(User))
     {
         <span class="navbar-text">
-            <strong>@UserManager.GetUserName(User).Split("@")[0].ToUpper()</strong>
+            <strong>@_userManager.GetUserName(User).Split("@")[0].ToUpper()</strong>
         </span>
         @if (User.IsInRole("Organisator"))
         {

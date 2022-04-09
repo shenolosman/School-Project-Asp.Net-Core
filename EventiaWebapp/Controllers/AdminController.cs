@@ -11,17 +11,18 @@ namespace EventiaWebapp.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly EventsHandler _eventHandler;
+        private readonly Database _databaseService;
 
-        public AdminController(UserManager<User> userManager, EventsHandler eventHandler)
+        public AdminController(UserManager<User> userManager, EventsHandler eventHandler, Database databaseService)
         {
             _userManager = userManager;
             _eventHandler = eventHandler;
+            _databaseService = databaseService;
         }
         public ActionResult Index()
         {
             var users = _userManager.Users.ToList();
             return View(users);
-
         }
         public async Task<ActionResult> EditUser(string id)
         {
@@ -30,6 +31,7 @@ namespace EventiaWebapp.Controllers
             return View(organisatorUser);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditUser(User user)
         {
             var organisatorUser = await _userManager.FindByIdAsync(user.Id);
@@ -52,7 +54,20 @@ namespace EventiaWebapp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
+        }
+        public ViewResult DbReset()
+        {
+            return View();
+        }
+        [HttpPost, ActionName("DbReset")]
+        [ValidateAntiForgeryToken]
+        public async Task<RedirectToActionResult> DbResetConfirmation()
+        {
+            await _databaseService.RecreateAndSeed();
+            var user = await _userManager.GetUserAsync(User);
+            await _userManager.UpdateSecurityStampAsync(user);
 
+            return RedirectToAction(nameof(Index));
         }
     }
 }

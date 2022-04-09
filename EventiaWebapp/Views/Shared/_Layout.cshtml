@@ -1,5 +1,4 @@
 ﻿@inject SignInManager<User> _singInManager
-@inject IWebHostEnvironment _environment
 @inject UserManager<User> _userManager
 <!DOCTYPE html>
 
@@ -35,7 +34,6 @@
                             </li>
                         }
                     </ul>
-                    @*This partial for the login *@
                     <partial name="_LoginPartial" />
                 </div>
             </div>

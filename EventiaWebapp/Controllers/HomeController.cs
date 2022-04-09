@@ -2,7 +2,6 @@
 
 namespace EventiaWebapp.Controllers
 {
-    //[AllowAnonymous]
     public class HomeController : Controller
     {
         public IActionResult Index()

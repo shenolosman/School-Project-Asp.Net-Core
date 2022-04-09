@@ -22,7 +22,6 @@ public class Database
         await _roleManager.CreateAsync(new IdentityRole("Organisator"));
         await _roleManager.CreateAsync(new IdentityRole("Admin"));
 
-
         var attendesEvents = new List<Event>
         {
             new()

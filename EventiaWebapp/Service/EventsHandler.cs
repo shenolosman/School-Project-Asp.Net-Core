@@ -1,6 +1,5 @@
 ﻿using EventiaWebapp.Data;
 using EventiaWebapp.Models;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventiaWebapp.Service;
@@ -17,9 +16,6 @@ public class EventsHandler
         return _dbContext.Events.ToList();
     }
     public User GetAttendee(string id) => _dbContext.Users.Include(x => x.JoinedEvents).ThenInclude(c => c.Organizer).First(p => p.Id == id);
-
-    public List<User> GetAllAttendee() =>
-        _dbContext.Users.Include(x => x.JoinedEvents).ThenInclude(c => c.Organizer).ToList();
     public void BookEvent(string attendeeId, int eventId)
     {
         var findEvent = _dbContext.Events
@@ -31,7 +27,7 @@ public class EventsHandler
             .FirstOrDefault(x => x.Id == attendeeId);
 
         findEvent.Attendees.Add(findAttendee);
-        //Kan addera spots
+        //findEvent.SeatsAvailable--;
         _dbContext.SaveChanges();
     }
     public List<Event> GetMyEvents(User user) => user.JoinedEvents.ToList();
@@ -52,13 +48,11 @@ public class EventsHandler
         _dbContext.Update(eventet);
         await _dbContext.SaveChangesAsync();
     }
-
     public async Task DeleteEvent(Event eventet)
     {
         _dbContext.Remove(eventet);
         await _dbContext.SaveChangesAsync();
     }
-
     public void DeleteMyEvent(string attendeeId, int eventId)
     {
         var findEvent = _dbContext.Events
@@ -70,17 +64,13 @@ public class EventsHandler
             .FirstOrDefault(x => x.Id == attendeeId);
 
         findEvent.Attendees.Remove(findAttendee);
-        //Kan addera spots
+        //findEvent.SeatsAvailable++;
         _dbContext.SaveChanges();
     }
-
     public async Task ChangeStatusofUser(bool isorganizer, User user)
     {
         user.isOrganizer = isorganizer;
-        //organisatorUser.isOrganizer = false;
-        //await _userManager.AddToRoleAsync(organisatorUser, "Attendee");
         _dbContext.Users.Update(user);
         await _dbContext.SaveChangesAsync();
-
     }
 }

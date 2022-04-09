@@ -36,14 +36,6 @@ app.MapControllerRoute(
     name: "conformation",
     pattern: "{controller=Event}/{action=JoinEvent}/{id?}");
 
-app.MapControllerRoute(
-    name: "isOrganizer",
-    pattern: "{controller=Admin}/{action=ChangeStatusOfUser}/{id?}");
-//app.MapControllerRoute(
-//    name: "isOrganizer",
-//pattern: "Admin/ChangeStatusOfUser/{id:int?}",
-//new { controller = "Admin", action = "ChangeStatusOfUser" });
-
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<Database>();

@@ -1,9 +1,8 @@
-﻿@using System.Globalization
-@inject UserManager<User> _userManager
+﻿@inject UserManager<User> _userManager
 @{
     ViewBag.Title = "Event | My Events";
     var counter = 1;
-    var user =await _userManager.GetUserAsync(User);
+    var user = await _userManager.GetUserAsync(User);
     var userId = _eventHandler.GetAttendee(user.Id);
     var myEvents = _eventHandler.GetMyEvents(userId);
     var attendeUsername = user.UserName.Split("@")[0];
@@ -24,7 +23,6 @@
             </tr>
         </thead>
         <tbody>
-
             @foreach (var item in myEvents)
             {
                 <tr>
