@@ -135,7 +135,6 @@ namespace EventiaWebapp.Controllers
             var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
             return View(eventet);
         }
-        [Authorize(Roles = "Organisator")]
         [HttpPost, ActionName("DeleteMyEvent")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteMyEventConfirmed(int id)

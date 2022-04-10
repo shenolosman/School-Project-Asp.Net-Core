@@ -1,8 +1,6 @@
 ﻿@model User
-@inject UserManager<User> _userManager
 @{
     ViewBag.Title = "Admin | Edit User";
-    var roles = await _userManager.GetRolesAsync(Model);
 }
 <br/>
 <h1>Edit User</h1>
@@ -32,19 +30,6 @@
                 <input asp-for="isOrganizer" class="form-check-input" />
                 <span asp-validation-for="isOrganizer" class="text-danger"></span>
             </div>
-            
-           @* <div class="form-group">
-               @if (Model.roles.Any())
-               {
-                   foreach (var role in Model.Roles)
-                   {
-                       <label class="control-label">@role</label>
-                   }
-               }else
-               {
-                   <label class="control-label">Does not have any role!</label>
-               }
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Update" class="btn btn-primary" /> |   <a asp-action="Index" class="text-black">Back to List</a>
             </div>

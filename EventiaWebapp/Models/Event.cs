@@ -17,7 +17,6 @@ namespace EventiaWebapp.Models
         [Required(ErrorMessage = "Please fill this field")]
         public int SeatsAvailable { get; set; }
         public User? Organizer { get; set; }
-        //public IEnumerable<User>? Attendees { get; set; }
         public List<User>? Attendees { get; set; }
 
     }

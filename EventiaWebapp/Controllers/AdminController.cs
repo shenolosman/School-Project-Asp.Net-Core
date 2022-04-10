@@ -12,12 +12,14 @@ namespace EventiaWebapp.Controllers
         private readonly UserManager<User> _userManager;
         private readonly EventsHandler _eventHandler;
         private readonly Database _databaseService;
+        private readonly SignInManager<User> _signInManager;
 
-        public AdminController(UserManager<User> userManager, EventsHandler eventHandler, Database databaseService)
+        public AdminController(UserManager<User> userManager, EventsHandler eventHandler, Database databaseService, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _eventHandler = eventHandler;
             _databaseService = databaseService;
+            _signInManager = signInManager;
         }
         public ActionResult Index()
         {
@@ -64,9 +66,7 @@ namespace EventiaWebapp.Controllers
         public async Task<RedirectToActionResult> DbResetConfirmation()
         {
             await _databaseService.RecreateAndSeed();
-            var user = await _userManager.GetUserAsync(User);
-            await _userManager.UpdateSecurityStampAsync(user);
-
+            await _signInManager.SignOutAsync();
             return RedirectToAction(nameof(Index));
         }
     }

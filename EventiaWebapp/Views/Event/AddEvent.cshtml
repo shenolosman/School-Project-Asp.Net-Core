@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = "Event | Add Event";
-    //Model.Date=DateTime.Parse("dd-MM-yyyyTHH:mm");
-   // asp-format="{dd-MM-yyyyTHH:mm}"  aria-valuemin="31/12/2020 00:00" aria-valuemax="31/12/2030 00:00" aria-valuenow="@DateTime.Now" type="datetime-local"
 }
 <br/>
 <h1>Add Event</h1>
@@ -24,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+                <input asp-for="Date" class="form-control" asp-format="{dd-MM-yyyyTHH:mm}" aria-valuemin="31/12/2020 00:00" aria-valuemax="31/12/2030 00:00"/>
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
