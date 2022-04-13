@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Event | List of Events";
-    var eventList = _eventHandler.GetEvents();
+    var eventList = _eventHandler.GetEvents().Result;
 }
 <div class="row">
     @foreach (var events in eventList)

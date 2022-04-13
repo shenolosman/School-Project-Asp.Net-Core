@@ -3,12 +3,11 @@
     ViewBag.Title = "Event | My Events";
     var counter = 1;
     var user = await _userManager.GetUserAsync(User);
-    var userId = _eventHandler.GetAttendee(user.Id);
-    var myEvents = _eventHandler.GetMyEvents(userId);
-    var attendeUsername = user.UserName.Split("@")[0];
+    var myEvents = (_eventHandler.GetAttendee(user.Id).Result?.JoinedEvents ?? Array.Empty<Event>()).ToList();
+    var attendeeUsername = user.UserName.Split("@")[0];
 }
 <div class="row">
-    <h3>@attendeUsername's events list</h3>
+    <h3>@attendeeUsername's events list</h3>
 </div>
 @if (myEvents.Count > 0)
 {
@@ -42,7 +41,7 @@ else
 {
     <div>
         <h4>
-            @attendeUsername has not event yet!
+            @attendeeUsername has not event yet!
         </h4>
     </div>
 }

@@ -2,7 +2,7 @@
 @inject UserManager<User> _userManager
 @{
     ViewBag.Title = "Event | Join Event";
-    var attente = _eventHandler.GetAttendee(_userManager.GetUserId(User));
+    var attentee =await _userManager.GetUserAsync(User);
 }
 <div class="row">
     <div class="col">
@@ -14,7 +14,7 @@
                 <a asp-controller="Event" asp-action="MyEvent" class="btn btn-primary">Go to MyEvent</a>
                 <a asp-controller="Event" asp-action="Index" class="btn btn-warning">Go Back to Events</a>
             </div>
-            <h5 class="card-header">@attente.UserName Added This Event To Your List!</h5>
+            <h5 class="card-header">@attentee.UserName Added This Event To Your List!</h5>
         </div>
     </div>
 </div>

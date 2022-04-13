@@ -4,7 +4,7 @@
     ViewBag.Title = "Event | Organizers Events";
     var counter = 1;
     var user=await _userManager.GetUserAsync(User);
-    var organizersList = _eventHandler.GetOrganizerEvents(user);
+    var organizersList = _eventHandler.GetOrganizerEvents(user).Result;
     var organizerUsername = user.UserName.Split("@")[0];
 }
 <h1>Organized events of <strong>@organizerUsername</strong></h1>

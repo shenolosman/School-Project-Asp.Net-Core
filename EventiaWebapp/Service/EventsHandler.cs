@@ -11,12 +11,9 @@ public class EventsHandler
     {
         _dbContext = dbContext;
     }
-    public List<Event> GetEvents()
-    {
-        return _dbContext.Events.ToList();
-    }
-    public User GetAttendee(string id) => _dbContext.Users.Include(x => x.JoinedEvents).ThenInclude(c => c.Organizer).First(p => p.Id == id);
-    public void BookEvent(string attendeeId, int eventId)
+    public async Task<List<Event>> GetEvents() => await _dbContext.Events.ToListAsync();
+    public async Task<User?> GetAttendee(string id) => await _dbContext.Users.Include(x => x.JoinedEvents)!.ThenInclude(c => c.Organizer).FirstOrDefaultAsync(p => p.Id == id);
+    public async Task BookEvent(string attendeeId, int eventId)
     {
         var findEvent = _dbContext.Events
             .Include(x => x.Attendees)
@@ -26,22 +23,18 @@ public class EventsHandler
             .Include(x => x.JoinedEvents)
             .FirstOrDefault(x => x.Id == attendeeId);
 
-        findEvent.Attendees.Add(findAttendee);
+
+        findEvent?.Attendees?.Add(findAttendee);
         //findEvent.SeatsAvailable--;
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
-    public List<Event> GetMyEvents(User user) => user.JoinedEvents.ToList();
-    public List<Event> GetOrganizerEvents(User organizer)
-    {
-        var events = _dbContext.Events.Include(x => x.Organizer)
-            .Where(z => z.Organizer.Id == organizer.Id).ToList();
-        return events;
-    }
-    public void AddEvent(Event newEvent, User user)
+    public async Task<List<Event>> GetOrganizerEvents(User organizer) => await _dbContext.Events.Include(x => x.Organizer)
+            .Where(z => z.Organizer.Id == organizer.Id).ToListAsync();
+    public async Task AddEvent(Event newEvent, User user)
     {
         newEvent.Organizer = user;
-        _dbContext.Add(newEvent);
-        _dbContext.SaveChanges();
+        await _dbContext.AddAsync(newEvent);
+        await _dbContext.SaveChangesAsync();
     }
     public async Task UpdateEvent(Event eventet)
     {
@@ -53,7 +46,7 @@ public class EventsHandler
         _dbContext.Remove(eventet);
         await _dbContext.SaveChangesAsync();
     }
-    public void DeleteMyEvent(string attendeeId, int eventId)
+    public async Task DeleteMyEvent(string attendeeId, int eventId)
     {
         var findEvent = _dbContext.Events
             .Include(x => x.Attendees)
@@ -63,9 +56,11 @@ public class EventsHandler
             .Include(x => x.JoinedEvents)
             .FirstOrDefault(x => x.Id == attendeeId);
 
-        findEvent.Attendees.Remove(findAttendee);
+
+
+        findEvent?.Attendees?.Remove(findAttendee);
         //findEvent.SeatsAvailable++;
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
     public async Task ChangeStatusofUser(bool isorganizer, User user)
     {

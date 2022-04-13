@@ -27,17 +27,17 @@ namespace EventiaWebapp.Controllers
         {
             return View();
         }
-        public IActionResult JoinEvent(int id)
+        public async Task<IActionResult> JoinEvent(int id)
         {
-            var join = _eventHandler.GetEvents().Find(x => x.Id == id);
+            var join = _eventHandler.GetEvents().Result.Find(x => x.Id == id);
             return View(join);
         }
-        public IActionResult Conformation(int id)
+        public async Task<IActionResult> Conformation(int id)
         {
             var attenteId = _userManager.GetUserId(User);
-            _eventHandler.BookEvent(attenteId, id);
+            await _eventHandler.BookEvent(attenteId, id);
             var confirmedEvent = _eventHandler.GetEvents()
-                .Find(e => e.Id == id);
+                .Result.Find(e => e.Id == id);
             return View(confirmedEvent);
         }
         public IActionResult OrganizersEvents()
@@ -57,7 +57,7 @@ namespace EventiaWebapp.Controllers
             if (ModelState.IsValid)
             {
                 var eventorganisator = await _userManager.GetUserAsync(User);
-                _eventHandler.AddEvent(eventet, eventorganisator);
+                await _eventHandler.AddEvent(eventet, eventorganisator);
                 return View(nameof(OrganizersEvents));
             }
             else
@@ -72,7 +72,7 @@ namespace EventiaWebapp.Controllers
             {
                 return NotFound();
             }
-            var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
+            var eventet = _eventHandler.GetEvents().Result.Find(x => x.Id == id);
 
             if (eventet == null)
             {
@@ -112,7 +112,7 @@ namespace EventiaWebapp.Controllers
             {
                 return NotFound();
             }
-            var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
+            var eventet = _eventHandler.GetEvents().Result.Find(x => x.Id == id);
             if (eventet == null)
             {
                 return NotFound();
@@ -125,14 +125,14 @@ namespace EventiaWebapp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
-            _eventHandler.DeleteEvent(eventet);
+            var eventet = _eventHandler.GetEvents().Result.Find(x => x.Id == id);
+            await _eventHandler.DeleteEvent(eventet);
             return RedirectToAction(nameof(OrganizersEvents));
         }
 
-        public IActionResult DeleteMyEvent(int? id)
+        public async Task<IActionResult> DeleteMyEvent(int? id)
         {
-            var eventet = _eventHandler.GetEvents().Find(x => x.Id == id);
+            var eventet = _eventHandler.GetEvents().Result.Find(x => x.Id == id);
             return View(eventet);
         }
         [HttpPost, ActionName("DeleteMyEvent")]
@@ -140,7 +140,7 @@ namespace EventiaWebapp.Controllers
         public async Task<IActionResult> DeleteMyEventConfirmed(int id)
         {
             var attenteId = _userManager.GetUserId(User);
-            _eventHandler.DeleteMyEvent(attenteId, id);
+            await _eventHandler.DeleteMyEvent(attenteId, id);
             return RedirectToAction(nameof(MyEvent));
         }
     }
