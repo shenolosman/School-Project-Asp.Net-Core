@@ -19,41 +19,14 @@ public class Database
     private async Task Seed()
     {
         await _roleManager.CreateAsync(new IdentityRole("Attendee"));
-        await _roleManager.CreateAsync(new IdentityRole("Organisator"));
+        await _roleManager.CreateAsync(new IdentityRole("Organizer"));
         await _roleManager.CreateAsync(new IdentityRole("Admin"));
 
-        var attendesEvents = new List<Event>
-        {
-            new()
-            {
-                Descriptiton = "Rap/RnB",
-                Title = "Bruno Mars",
-                Location = "Stockholm",
-                Date = new DateTime(2022, 04, 11),
-                SeatsAvailable = 100
-            },
-            new()
-            {
-                Descriptiton = "Rock",
-                Title = "Korn",
-                Location = "Malmo",
-                Date = new DateTime(2022, 05, 12),
-                SeatsAvailable = 100
-            },
-            new()
-            {
-                Descriptiton = "Rock",
-                Title = "Metallica",
-                Location = "Goteborg",
-                Date = new DateTime(2022, 06, 15),
-                SeatsAvailable = 100
-            }
-        };
         var hostedEventList = new List<Event>
         {
             new()
             {
-                Descriptiton = "Culture",
+                Description = "Culture",
                 Title = "Vegan for beginners",
                 Location = "Malmo",
                 Date = new DateTime(2022, 10, 25),
@@ -61,7 +34,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Rock",
+                Description = "Rock",
                 Title = "Sweden Spring Music",
                 Location = "Stockholm",
                 Date = new DateTime(2022, 11, 20),
@@ -70,28 +43,54 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Pop",
+                Description = "Pop",
                 Title = "Miss Li", Location = "Stockholm",
                 Date = new DateTime(2022, 12, 1),
+                SeatsAvailable = 100
+            },
+            new()
+            {
+                Description = "Rap/RnB",
+                Title = "Bruno Mars",
+                Location = "Stockholm",
+                Date = new DateTime(2022, 04, 11),
+                SeatsAvailable = 100
+            },
+            new()
+            {
+                Description = "Rock",
+                Title = "Korn",
+                Location = "Malmo",
+                Date = new DateTime(2022, 05, 12),
+                SeatsAvailable = 100
+            },
+            new()
+            {
+                Description = "Rock",
+                Title = "Metallica",
+                Location = "Goteborg",
+                Date = new DateTime(2022, 06, 15),
                 SeatsAvailable = 100
             }
         };
 
-        var organisatorUser = new User() { UserName = "organisator@mail.com", Email = "organisator@mail.com", HostedEvents = hostedEventList, isOrganizer = true };
-        var attendeeUser = new User() { UserName = "attendee@mail.com", Email = "attendee@mail.com", JoinedEvents = attendesEvents };
+        var attendeeUser = new User() { UserName = "attendee@mail.com", Email = "attendee@mail.com", JoinedEvents = new List<Event>() };
+
+        var OrganizerUser = new User() { UserName = "Organizer@mail.com", Email = "Organizer@mail.com", HostedEvents = hostedEventList, isOrganizer = true };
+
         var adminUser = new User() { UserName = "admin@mail.com", Email = "admin@mail.com" };
 
         await _userManager.CreateAsync(attendeeUser, "Passw0rd!");
-        await _userManager.CreateAsync(organisatorUser, "Passw0rd!");
+        await _userManager.CreateAsync(OrganizerUser, "Passw0rd!");
         await _userManager.CreateAsync(adminUser, "Passw0rd!");
-        foreach (var item in attendesEvents)
-        {
-            var organizator = item.Organizer = organisatorUser;
-            attendeeUser.HostedEvents = organizator.HostedEvents;
-        }
+        //foreach (var item in attendesEvents)
+        //{
+        //    var organizator = item.Organizer = OrganizerUser;
+        //    attendeeUser.HostedEvents = organizator.HostedEvents;
+        //}
 
         await _userManager.AddToRoleAsync(attendeeUser, "Attendee");
-        await _userManager.AddToRoleAsync(organisatorUser, "Organisator");
+        await _userManager.AddToRoleAsync(OrganizerUser, "Organizer");
         await _userManager.AddToRoleAsync(adminUser, "Admin");
 
         #region old seed lists without identity and roles
@@ -116,7 +115,7 @@ public class Database
         {
             new()
             {
-                Descriptiton = "Rap/RnB",
+                Description = "Rap/RnB",
                 Title = "Bruno Mars",
                 Location = "Stockholm",
                 Date = new DateTime(2022, 04, 11),
@@ -125,7 +124,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Rock",
+                Description = "Rock",
                 Title = "Korn",
                 Location = "Malmo",
                 Date = new DateTime(2022, 05, 12),
@@ -134,7 +133,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Rock",
+                Description = "Rock",
                 Title = "Metallica",
                 Location = "Goteborg",
                 Date = new DateTime(2022, 06, 15),
@@ -143,7 +142,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Rap/RnB",
+                Description = "Rap/RnB",
                 Title = "Sagopa Kajmer",
                 Location = "Istanbul",
                 Date = new DateTime(2022, 07, 19),
@@ -152,7 +151,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Rap/RnB",
+                Description = "Rap/RnB",
                 Title = "Ezhel",
                 Location = "Berlin",
                 Date = new DateTime(2022, 08, 1),
@@ -161,7 +160,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Pop",
+                Description = "Pop",
                 Title = "Britney Spears",
                 Location = "New York",
                 Date = new DateTime(2022, 09, 21),
@@ -170,7 +169,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Culture",
+                Description = "Culture",
                 Title = "Vegan for beginners",
                 Location = "Malmo",
                 Date = new DateTime(2022, 10, 25),
@@ -179,7 +178,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Rock",
+                Description = "Rock",
                 Title = "Sweden Spring Music",
                 Location = "Stockholm",
                 Date = new DateTime(2022, 11, 20),
@@ -188,7 +187,7 @@ public class Database
             },
             new()
             {
-                Descriptiton = "Pop",
+                Description = "Pop",
                 Title = "Miss Li", Location = "Stockholm",
                 Date = new DateTime(2022, 12, 1),
                 SeatsAvailable = 100,OrganizerId = 1,

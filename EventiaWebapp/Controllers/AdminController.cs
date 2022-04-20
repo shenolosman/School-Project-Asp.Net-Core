@@ -28,31 +28,31 @@ namespace EventiaWebapp.Controllers
         }
         public async Task<ActionResult> EditUser(string id)
         {
-            var organisatorUser = await _userManager.FindByIdAsync(id);
+            var OrganizerUser = await _userManager.FindByIdAsync(id);
 
-            return View(organisatorUser);
+            return View(OrganizerUser);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditUser(User user)
         {
-            var organisatorUser = await _userManager.FindByIdAsync(user.Id);
+            var OrganizerUser = await _userManager.FindByIdAsync(user.Id);
 
-            if (organisatorUser == null) return NotFound();
+            if (OrganizerUser == null) return NotFound();
             bool userTrue = user.isOrganizer;
             if (user.isOrganizer == true)
             {
-                userTrue = organisatorUser.isOrganizer = true;
-                await _userManager.AddToRoleAsync(organisatorUser, "Organisator");
-                await _eventHandler.ChangeStatusofUser(userTrue, organisatorUser);
+                userTrue = OrganizerUser.isOrganizer = true;
+                await _userManager.AddToRoleAsync(OrganizerUser, "Organizer");
+                await _eventHandler.ChangeStatusofUser(userTrue, OrganizerUser);
                 return RedirectToAction(nameof(Index));
             }
             else if (user.isOrganizer == false)
             {
-                userTrue = organisatorUser.isOrganizer = false;
-                await _userManager.AddToRoleAsync(organisatorUser, "Attendee");
-                await _userManager.RemoveFromRoleAsync(organisatorUser, "Organisator");
-                await _eventHandler.ChangeStatusofUser(userTrue, organisatorUser);
+                userTrue = OrganizerUser.isOrganizer = false;
+                await _userManager.AddToRoleAsync(OrganizerUser, "Attendee");
+                await _userManager.RemoveFromRoleAsync(OrganizerUser, "Organizer");
+                await _eventHandler.ChangeStatusofUser(userTrue, OrganizerUser);
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));

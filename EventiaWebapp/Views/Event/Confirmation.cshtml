@@ -1,4 +1,4 @@
-﻿@model Event?
+﻿@model Event
 @inject UserManager<User> _userManager
 @{
     ViewBag.Title = "Event | Join Event";
@@ -10,7 +10,7 @@
             <h5 class="card-header">@Model.Title</h5>
             <div class="card-body">
                 <h5 class="card-title">@Model.Date.ToShortDateString() (@Model.Date.ToString("HH:mm")) in @Model.Location</h5>
-                <p class="card-text">@Model.Descriptiton</p>
+                <p class="card-text">@Model.Description</p>
                 <a asp-controller="Event" asp-action="MyEvent" class="btn btn-primary">Go to MyEvent</a>
                 <a asp-controller="Event" asp-action="Index" class="btn btn-warning">Go Back to Events</a>
             </div>

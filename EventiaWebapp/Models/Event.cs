@@ -9,7 +9,7 @@ namespace EventiaWebapp.Models
         public string Title { get; set; }
         public string Location { get; set; }
         public DateTime Date { get; set; }
-        public string Descriptiton { get; set; }
+        public string Description { get; set; }
         public int SeatsAvailable { get; set; }
         public User? Organizer { get; set; }
         public List<User>? Attendees { get; set; }

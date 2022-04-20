@@ -28,10 +28,7 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.MapControllerRoute(
-    "default",
-    "{controller=Home}/{action=Index}");
-
+app.MapDefaultControllerRoute();
 app.MapControllerRoute(
     name: "conformation",
     pattern: "{controller=Event}/{action=JoinEvent}/{id?}");

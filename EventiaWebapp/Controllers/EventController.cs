@@ -32,7 +32,7 @@ namespace EventiaWebapp.Controllers
             var join = _eventHandler.GetEvents().Result.Find(x => x.Id == id);
             return View(join);
         }
-        public async Task<IActionResult> Conformation(int id)
+        public async Task<IActionResult> Confirmation(int id)
         {
             var attenteId = _userManager.GetUserId(User);
             await _eventHandler.BookEvent(attenteId, id);
