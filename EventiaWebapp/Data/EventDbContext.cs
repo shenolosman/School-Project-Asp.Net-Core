@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventiaWebapp.Data
 {
-    public class EventDbContext : IdentityDbContext<User>
+    public class EventDbContext : IdentityDbContext<User> //IdentityDbContext<User, MyRole, string>
     {
         public EventDbContext(DbContextOptions<EventDbContext> options) : base(options)
         {

@@ -9,7 +9,7 @@ public class Database
     private readonly EventDbContext _dbContext;
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-
+    //RoleManager<MyRole>
     public Database(EventDbContext dbContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
     {
         _dbContext = dbContext;
@@ -30,7 +30,8 @@ public class Database
                 Title = "Vegan for beginners",
                 Location = "Malmo",
                 Date = new DateTime(2022, 10, 25),
-                SeatsAvailable = 100
+                SeatsAvailable = 100,
+                ImageName = "default-img.jpg"
             },
             new()
             {
@@ -38,15 +39,16 @@ public class Database
                 Title = "Sweden Spring Music",
                 Location = "Stockholm",
                 Date = new DateTime(2022, 11, 20),
-                SeatsAvailable = 100
-
+                SeatsAvailable = 100,
+                ImageName = "default-img.jpg"
             },
             new()
             {
                 Description = "Pop",
                 Title = "Miss Li", Location = "Stockholm",
                 Date = new DateTime(2022, 12, 1),
-                SeatsAvailable = 100
+                SeatsAvailable = 100,
+                ImageName = "default-img.jpg"
             },
             new()
             {
@@ -54,7 +56,8 @@ public class Database
                 Title = "Bruno Mars",
                 Location = "Stockholm",
                 Date = new DateTime(2022, 04, 11),
-                SeatsAvailable = 100
+                SeatsAvailable = 100,
+                ImageName = "default-img.jpg"
             },
             new()
             {
@@ -62,7 +65,8 @@ public class Database
                 Title = "Korn",
                 Location = "Malmo",
                 Date = new DateTime(2022, 05, 12),
-                SeatsAvailable = 100
+                SeatsAvailable = 100,
+                ImageName = "default-img.jpg"
             },
             new()
             {
@@ -70,15 +74,16 @@ public class Database
                 Title = "Metallica",
                 Location = "Goteborg",
                 Date = new DateTime(2022, 06, 15),
-                SeatsAvailable = 100
+                SeatsAvailable = 100,
+                ImageName = "default-img.jpg"
             }
         };
 
-        var attendeeUser = new User() { UserName = "attendee@mail.com", Email = "attendee@mail.com", JoinedEvents = new List<Event>() };
+        var attendeeUser = new User() { UserName = "Attendee", Email = "attendee@mail.com", JoinedEvents = new List<Event>() };
 
-        var OrganizerUser = new User() { UserName = "Organizer@mail.com", Email = "Organizer@mail.com", HostedEvents = hostedEventList, isOrganizer = true };
+        var OrganizerUser = new User() { UserName = "Organizer", Email = "Organizer@mail.com", HostedEvents = hostedEventList, isOrganizer = true };
 
-        var adminUser = new User() { UserName = "admin@mail.com", Email = "admin@mail.com" };
+        var adminUser = new User() { UserName = "Admin", Email = "admin@mail.com" };
 
         await _userManager.CreateAsync(attendeeUser, "Passw0rd!");
         await _userManager.CreateAsync(OrganizerUser, "Passw0rd!");

@@ -10,14 +10,12 @@ namespace EventiaWebapp.Controllers
     public class AdminController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly EventsHandler _eventHandler;
         private readonly Database _databaseService;
         private readonly SignInManager<User> _signInManager;
 
-        public AdminController(UserManager<User> userManager, EventsHandler eventHandler, Database databaseService, SignInManager<User> signInManager)
+        public AdminController(UserManager<User> userManager, Database databaseService, SignInManager<User> signInManager)
         {
             _userManager = userManager;
-            _eventHandler = eventHandler;
             _databaseService = databaseService;
             _signInManager = signInManager;
         }
@@ -36,23 +34,27 @@ namespace EventiaWebapp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditUser(User user)
         {
-            var OrganizerUser = await _userManager.FindByIdAsync(user.Id);
+            var organizerUser = await _userManager.FindByIdAsync(user.Id);
 
-            if (OrganizerUser == null) return NotFound();
-            bool userTrue = user.isOrganizer;
+            if (organizerUser == null) return NotFound();
+            //bool userTrue = user.isOrganizer;
             if (user.isOrganizer == true)
             {
-                userTrue = OrganizerUser.isOrganizer = true;
-                await _userManager.AddToRoleAsync(OrganizerUser, "Organizer");
-                await _eventHandler.ChangeStatusofUser(userTrue, OrganizerUser);
+                // userTrue =
+                organizerUser.isOrganizer = true;
+                await _userManager.AddToRoleAsync(organizerUser, "Organizer");
+                await _userManager.UpdateAsync(organizerUser);
+                //  await _eventHandler.ChangeStatusofUser(userTrue, OrganizerUser);
                 return RedirectToAction(nameof(Index));
             }
             else if (user.isOrganizer == false)
             {
-                userTrue = OrganizerUser.isOrganizer = false;
-                await _userManager.AddToRoleAsync(OrganizerUser, "Attendee");
-                await _userManager.RemoveFromRoleAsync(OrganizerUser, "Organizer");
-                await _eventHandler.ChangeStatusofUser(userTrue, OrganizerUser);
+                // userTrue = 
+                organizerUser.isOrganizer = false;
+                await _userManager.AddToRoleAsync(organizerUser, "Attendee");
+                await _userManager.RemoveFromRoleAsync(organizerUser, "Organizer");
+                await _userManager.UpdateAsync(organizerUser);
+                // await _eventHandler.ChangeStatusofUser(userTrue, OrganizerUser);
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));

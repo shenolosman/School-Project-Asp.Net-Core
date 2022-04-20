@@ -4,10 +4,9 @@
     ViewBag.Title = "Event | Organizers Events";
     var counter = 1;
     var user=await _userManager.GetUserAsync(User);
-    var organizersList = _eventHandler.GetOrganizerEvents(user).Result;
-    var organizerUsername = user.UserName.Split("@")[0];
+    var organizersList =await _eventHandler.GetOrganizerEvents(user);
 }
-<h1>Organized events of <strong>@organizerUsername</strong></h1>
+<h1>Organized events of <strong>@user.UserName</strong></h1>
 <br/>
 <p>
     <a asp-action="AddEvent" class="btn btn-success">Create New Event</a>
@@ -44,7 +43,7 @@ else
 {
     <div>
         <h4>
-            @organizerUsername has not event yet!
+            @user.UserName has not event yet!
         </h4>
     </div>
 }

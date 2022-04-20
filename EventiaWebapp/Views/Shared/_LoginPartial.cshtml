@@ -5,7 +5,7 @@
     @if (_signInManager.IsSignedIn(User))
     {
         <span class="navbar-text">
-            <strong>@_userManager.GetUserName(User).Split("@")[0].ToUpper()</strong>
+            <strong>@_userManager.GetUserName(User)</strong>
         </span>
         @if (User.IsInRole("Organizer"))
         {

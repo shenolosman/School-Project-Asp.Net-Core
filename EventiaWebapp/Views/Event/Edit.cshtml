@@ -7,8 +7,8 @@
 <h1>Edit Event</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -37,7 +37,20 @@
                 <span asp-validation-for="SeatsAvailable" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" /> |   <a asp-action="OrganizersEvents" class="text-black">Back to List</a>
+                <div class="col-md-6">
+                    <label asp-for="ImageName" class="control-label"></label>
+                    <img src="@("~/img/" + @Model.ImageName)" asp-append-version="true"  id="ImageName"/>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ImageFile" class="control-label"></label>
+                    <input asp-for="ImageFile" class="form-control" accept=".jpg,.png,.jpeg,.gif"/>
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+         
+            </div>
+            <div class="form-group">
+                @{TempData["ImageName"]=Model.ImageName;}
+                <input type="submit" value="Save" class="btn btn-primary"/> | <a asp-action="OrganizersEvents" class="text-black">Back to List</a>
             </div>
         </form>
     </div>

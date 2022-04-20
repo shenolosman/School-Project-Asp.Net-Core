@@ -1,18 +1,17 @@
 ﻿@{
     ViewBag.Title = "Event | List of Events";
-    var eventList = _eventHandler.GetEvents().Result;
+    var eventList =await _eventHandler.GetEvents();
 }
 <div class="row">
     @foreach (var events in eventList)
     {
         <div class="col">
-            <div class="card listedCard">
-                <h5 class="card-header">@events.Title</h5>
+            <div class="card listedCard" style="width: 400px">
+                <img class="card-img-top" src="@("~/img/"+@events.ImageName)" alt="@events.Title" asp-append-version="true" width="200px"/>
                 <div class="card-body">
-                    <h5 class="card-title">@events.Date.ToShortDateString() (@events.Date.ToString("HH:mm")) in @events.Location</h5>
-                    <p class="card-text">
-                        @events.Description
-                    </p>
+                    <h4 class="card-title">@events.Title</h4>
+                    <p class="card-text">Events date: @events.Date.ToShortDateString() (@events.Date.ToString("HH:mm")) in      @events.Location</p>
+                    <p class="card-text">Description of event: @events.Description</p>
                     <a asp-controller="Event" asp-action="JoinEvent" asp-route-id="@events.Id" class="btn btn-xm btn-primary">Join</a>
                 </div>
             </div>
