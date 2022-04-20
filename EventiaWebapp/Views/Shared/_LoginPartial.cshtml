@@ -7,7 +7,7 @@
         <span class="navbar-text">
             <strong>@_userManager.GetUserName(User)</strong>
         </span>
-        @if (User.IsInRole("Organizer"))
+        @if (User.IsInRole(MyRole.Organizer))
         {
             <li class="nav-item" style="margin-left: 10px">
                 <a class="nav-link btn btn-success" style="color: white" asp-controller="Event" asp-action="OrganizersEvents">Events</a>
@@ -16,7 +16,7 @@
                 <a class="nav-link btn btn-success" style="color: white" asp-controller="Event" asp-action="AddEvent">Add New Event</a>
             </li>
         }
-        @if (User.IsInRole("Admin"))
+        @if (User.IsInRole(MyRole.Admin))
         {
             <li class="nav-item" style="margin-left: 10px">
                 <a class="nav-link btn btn-danger" style="color: white" asp-controller="Admin" asp-action="Index">Manage Users</a>

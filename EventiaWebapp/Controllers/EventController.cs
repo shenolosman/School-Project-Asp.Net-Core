@@ -43,12 +43,12 @@ namespace EventiaWebapp.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = MyRole.Organizer)]
         public IActionResult AddEvent()
         {
             return View();
         }
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = MyRole.Organizer)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddEvent(Event eventet)
@@ -65,7 +65,7 @@ namespace EventiaWebapp.Controllers
             }
             return View();
         }
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = MyRole.Organizer)]
         public async Task<IActionResult> Edit(int id)
         {
             var eventet = await _eventHandler.GetEvent(id);
@@ -73,7 +73,7 @@ namespace EventiaWebapp.Controllers
                 return NotFound();
             return View(eventet);
         }
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = MyRole.Organizer)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Event eventet)
@@ -95,7 +95,7 @@ namespace EventiaWebapp.Controllers
             return View(eventet);
         }
 
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = MyRole.Organizer)]
         public async Task<IActionResult> Delete(int id)
         {
             var eventet = await _eventHandler.GetEvent(id);
@@ -103,7 +103,7 @@ namespace EventiaWebapp.Controllers
                 return NotFound();
             return View(eventet);
         }
-        [Authorize(Roles = "Organizer")]
+        [Authorize(Roles = MyRole.Organizer)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

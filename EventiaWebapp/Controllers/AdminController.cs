@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventiaWebapp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = MyRole.Admin)]
     public class AdminController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -37,24 +37,19 @@ namespace EventiaWebapp.Controllers
             var organizerUser = await _userManager.FindByIdAsync(user.Id);
 
             if (organizerUser == null) return NotFound();
-            //bool userTrue = user.isOrganizer;
             if (user.isOrganizer == true)
             {
-                // userTrue =
                 organizerUser.isOrganizer = true;
-                await _userManager.AddToRoleAsync(organizerUser, "Organizer");
+                await _userManager.AddToRoleAsync(organizerUser, MyRole.Organizer);
                 await _userManager.UpdateAsync(organizerUser);
-                //  await _eventHandler.ChangeStatusofUser(userTrue, OrganizerUser);
                 return RedirectToAction(nameof(Index));
             }
             else if (user.isOrganizer == false)
             {
-                // userTrue = 
                 organizerUser.isOrganizer = false;
-                await _userManager.AddToRoleAsync(organizerUser, "Attendee");
-                await _userManager.RemoveFromRoleAsync(organizerUser, "Organizer");
+                await _userManager.AddToRoleAsync(organizerUser, MyRole.Attendee);
+                await _userManager.RemoveFromRoleAsync(organizerUser, MyRole.Organizer);
                 await _userManager.UpdateAsync(organizerUser);
-                // await _eventHandler.ChangeStatusofUser(userTrue, OrganizerUser);
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));

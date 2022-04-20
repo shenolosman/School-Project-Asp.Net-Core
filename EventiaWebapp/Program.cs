@@ -28,7 +28,6 @@ builder.Services.ConfigureApplicationCookie(o =>
     //o.ExpireTimeSpan = TimeSpan.FromDays(30);
     //o.LoginPath = new PathString("/Home/Index"); //redirect to that path without permission 
 });
-//.AddRoles<MyRole>()
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<EventDbContext>();
 

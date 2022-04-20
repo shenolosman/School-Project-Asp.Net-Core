@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventiaWebapp.Models
 {
-    public class User : IdentityUser //: IdentityUser<string>
+    public class User : IdentityUser
     {
         [InverseProperty("Organizer")]
         public IEnumerable<Event>? HostedEvents { get; set; }

@@ -1,9 +1,9 @@
 ﻿namespace EventiaWebapp.Models
 {
-    public class MyRole //: IdentityRole<string>
+    public static class MyRole
     {
-        public static string Attendee { get; set; } = "Attende";
-        public string Organizer { get; set; } = "Organizer";
-
+        public const string Admin = "Admin";
+        public const string Attendee = "Attendee";
+        public const string Organizer = "Organizer";
     }
 }
