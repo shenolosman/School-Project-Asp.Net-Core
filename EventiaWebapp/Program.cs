@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("default");
 builder.Services.AddScoped<Database>();
 builder.Services.AddScoped<EventsHandler>();
+builder.Services.AddScoped<AdminsHandler>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
