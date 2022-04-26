@@ -1,9 +1,4 @@
-﻿using EventiaWebapp.Data;
-using EventiaWebapp.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
-namespace EventiaWebapp.Service
+﻿namespace EventiaWebapp.Service
 {
     public class AdminsHandler
     {
